@@ -1,0 +1,27 @@
+body {
+    background-color: rgb(184, 184, 184);
+}
+.welcome-container {
+    text-align: center;
+    margin: 50px;
+}
+
+.card {
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    background-color: #fff;
+}
+
+.logout-button {
+    margin: 20px;
+    padding: 10px;
+    background-color: #d9534f;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}

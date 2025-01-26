@@ -1,0 +1,21 @@
+
+  .tra {
+    backdrop-filter: blur(5px);
+  }
+  form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 352px; 
+  }
+  .account-msg{
+    margin: 8px 0 0 0 ;
+    color: #B0BEC5;
+    font-family: monospace
+  }
+  .loader-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
