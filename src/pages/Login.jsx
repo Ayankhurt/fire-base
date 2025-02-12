@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+    getAuth,
+    sendPasswordResetEmail,
+    signInWithEmailAndPassword,
+    signInWithPopup,
+    GithubAuthProvider,
+    GoogleAuthProvider,
+    FacebookAuthProvider
+} from "firebase/auth";
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
@@ -24,8 +32,89 @@ const Login = () => {
                 const errorMessage = error.message;
                 setErrorMessage(errorMessage);
             });
-        }
+    }
 
+    const provider = new GithubAuthProvider();
+    const signupWithGithub = () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+                const credential = GithubAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log("User :", user)
+                navigate('/welcome');
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GithubAuthProvider.credentialFromError(error);
+                console.log("error", error)
+                // ...
+            });
+    }
+    const provider2 = new GoogleAuthProvider();
+
+    const signupWithGoogle = () => {
+        signInWithPopup(auth, provider2)
+            .then((result) => {
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log("User :", user)
+                navigate('/welcome');
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GoogleAuthProvider.credentialFromError(error);
+                // ...
+                console.log("error", error)
+            });
+    }
+    const provider3 = new FacebookAuthProvider();
+    const signupWithFacebook = () => {
+    signInWithPopup(auth, provider3)
+        .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
+
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const accessToken = credential.accessToken;
+            console.log("User :", user)
+            navigate('/welcome');
+
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = FacebookAuthProvider.credentialFromError(error);
+
+            // ...
+            console.log("error", error)
+
+        });
+    }
     return (
         <div className="login-container">
             <h2>Login to Chrome</h2>
@@ -59,11 +148,14 @@ const Login = () => {
                 {errorMessage && <p className="error-message">{errorMessage}</p>}
             </form>
             <p className="link">
-                <a href="/Forget "style={{textDecoration: "none" , color: "#333" , fontSize: "20px"}}>Forgot Password?</a>
+                <a href="/Forget " style={{ textDecoration: "none", color: "#333", fontSize: "20px" }}>Forgot Password?</a>
             </p>
             <p className="link">
-                <a href="/signup" style={{textDecoration: "none" , color: "#333" , fontSize: "20px"}}>Create account</a>
+                <a href="/signup" style={{ textDecoration: "none", color: "#333", fontSize: "20px" }}>Create account</a>
             </p>
+            <button onClick={signupWithGithub}>Login With Github</button>
+            <button onClick={signupWithGoogle}>Login With Google</button>
+            <button onClick={signupWithFacebook}>Login With Facebook</button>
         </div>
     );
 }
